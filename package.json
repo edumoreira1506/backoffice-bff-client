@@ -1,0 +1,39 @@
+{
+	"name": "@cig-platform/backoffice-bff-client",
+	"version": "0.0.1",
+	"description": "",
+	"main": "build/index.js",
+	"types": "build/index.d.ts",
+	"scripts": {
+		"build": "babel src --extensions \".ts\" --out-dir build --copy-files --no-copy-ignored && tsc --declaration --emitDeclarationOnly",
+		"prepare": "npm run build",
+		"version": "git add -A src",
+		"postversion": "git push && git push --tags",
+		"lint": "eslint src",
+		"test": "jest src/tests"
+	},
+	"repository": {},
+	"author": "Eduardo Moreira",
+	"license": "ISC",
+	"bugs": {},
+	"homepage": "",
+	"dependencies": {},
+	"devDependencies": {
+		"@babel/cli": "^7.15.7",
+		"@babel/core": "^7.15.5",
+		"@babel/node": "^7.15.4",
+		"@babel/plugin-syntax-flow": "^7.14.5",
+		"@babel/preset-env": "^7.15.6",
+		"@babel/preset-typescript": "^7.15.0",
+		"@types/jest": "^27.0.2",
+		"@typescript-eslint/eslint-plugin": "^4.32.0",
+		"@typescript-eslint/parser": "^4.32.0",
+		"babel-jest": "^27.2.4",
+		"babel-plugin-module-resolver": "^4.1.0",
+		"eslint": "^7.32.0",
+		"jest": "^27.2.4",
+		"ts-jest": "^27.0.5",
+		"ts-node": "^10.2.1",
+		"typescript": "^4.4.3"
+	}
+}
