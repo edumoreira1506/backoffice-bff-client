@@ -29,7 +29,7 @@ export default class BackofficeBffClient {
 
   async editBreeder(breederId: string, token: string, breeder: Partial<IBreeder>) {
     try {
-      const { data } = await this._axiosBackofficeBffInstance.patch(`/v1/breeders/${breederId}`, { breeder }, {
+      const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(`/v1/breeders/${breederId}`, { breeder }, {
         headers: {
           'X-Cig-Token': token
         }
