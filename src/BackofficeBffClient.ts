@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import FormData from 'form-data';
 import { IUser, IBreeder, ErrorRequest } from '@cig-platform/types';
 
 export interface PostUserRequestSuccess {
@@ -11,6 +12,23 @@ export interface RequestSuccess {
   ok: true;
   token: string;
 }
+
+
+export const toFormData = (object: Record<string, any>) => {
+  const formData = new FormData();
+
+  Object.entries(object).forEach(([key, value]) => {
+    if (key === 'files') {
+      value.forEach((file: any) => (
+        formData.append('files', file)
+      ));
+    } else {
+      formData.append(key, value);
+    }
+  });
+
+  return formData;
+};
 
 export default class BackofficeBffClient {
   private _axiosBackofficeBffInstance: AxiosInstance;
@@ -29,11 +47,16 @@ export default class BackofficeBffClient {
 
   async editBreeder(breederId: string, token: string, breeder: Partial<IBreeder>) {
     try {
-      const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(`/v1/breeders/${breederId}`, { breeder }, {
-        headers: {
-          'X-Cig-Token': token
+      const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
+        `/v1/breeders/${breederId}`, 
+        { breeder: toFormData(breeder) },
+        {
+          headers: {
+            'X-Cig-Token': token,
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      });
+      );
 
       return data;
     } catch (error) {
