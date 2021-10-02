@@ -49,7 +49,7 @@ export default class BackofficeBffClient {
     try {
       const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
         `/v1/breeders/${breederId}`, 
-        { breeder: toFormData(breeder) },
+        toFormData(breeder),
         {
           headers: {
             'X-Cig-Token': token,
