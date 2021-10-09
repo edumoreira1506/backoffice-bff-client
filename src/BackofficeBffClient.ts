@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
-import { IUser, IBreeder, ErrorRequest, IBreederImage } from '@cig-platform/types';
+import { IUser, IBreeder, IBreederImage } from '@cig-platform/types';
+import { RequestErrorHandler } from '@cig-platform/decorators';
 
 export interface PostUserRequestSuccess {
   ok: true;
@@ -50,47 +51,33 @@ export default class BackofficeBffClient {
     });
   }
 
+  @RequestErrorHandler()
   async editBreeder(breederId: string, token: string, breeder: Partial<IBreeder>) {
-    try {
-      const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
-        `/v1/breeders/${breederId}`, 
-        toFormData(breeder),
-        {
-          headers: {
-            'X-Cig-Token': token,
-            'Content-Type': 'multipart/form-data'
-          }
+    const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
+      `/v1/breeders/${breederId}`, 
+      toFormData(breeder),
+      {
+        headers: {
+          'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
         }
-      );
+      }
+    );
 
-      return data;
-    } catch (error) {
-      if (!axios.isAxiosError(error)) return null;
-
-      const bodyData = error.response?.data as unknown as ErrorRequest;
-
-      return bodyData;
-    }
+    return data;
   }
 
+  @RequestErrorHandler()
   async getBreeder(breederId: string, token: string) {
-    try {
-      const { data } = await this._axiosBackofficeBffInstance.get<GetBreederRequestSuccess>(
-        `/v1/breeders/${breederId}`, 
-        {
-          headers: {
-            'X-Cig-Token': token,
-          }
+    const { data } = await this._axiosBackofficeBffInstance.get<GetBreederRequestSuccess>(
+      `/v1/breeders/${breederId}`, 
+      {
+        headers: {
+          'X-Cig-Token': token,
         }
-      );
+      }
+    );
 
-      return data;
-    } catch (error) {
-      if (!axios.isAxiosError(error)) return null;
-
-      const bodyData = error.response?.data as unknown as ErrorRequest;
-
-      return bodyData;
-    }
+    return data;
   }
 }

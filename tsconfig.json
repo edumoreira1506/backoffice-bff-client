@@ -6,6 +6,7 @@
     "lib": [
       "ES2020"
     ],
+    "experimentalDecorators": true,
     "outDir": "./build",
     "rootDir": "./src",
     "strict": true,
