@@ -20,13 +20,15 @@ export interface GetBreederRequestSuccess {
 }
 
 
+export const FILE_KEYS = ['newImages', 'files'];
+
 export const toFormData = (object: Record<string, any>) => {
   const formData = new FormData();
 
   Object.entries(object).forEach(([key, value]) => {
-    if (key === 'files') {
+    if (FILE_KEYS.includes(key)) {
       value.forEach((file: any) => (
-        formData.append('files', file)
+        formData.append(key, file)
       ));
     } else {
       formData.append(key, value);
@@ -52,10 +54,20 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
-  async editBreeder(breederId: string, token: string, breeder: Partial<IBreeder>) {
+  async editBreeder(
+    breederId: string,
+    token: string,
+    breeder: Partial<IBreeder>,
+    newImages: File[],
+    removedImageIds: string[] = []
+  ) {
     const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
       `/v1/breeders/${breederId}`, 
-      toFormData(breeder),
+      toFormData({
+        ...breeder,
+        newImages,
+        deletedImages: removedImageIds.join(',')
+      }),
       {
         headers: {
           'X-Cig-Token': token,
