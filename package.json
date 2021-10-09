@@ -18,7 +18,7 @@
 	"bugs": {},
 	"homepage": "",
 	"dependencies": {
-		"@cig-platform/types": "0.0.5",
+		"@cig-platform/types": "0.0.6",
 		"axios": "0.21.4",
 		"form-data": "^4.0.0"
 	},
