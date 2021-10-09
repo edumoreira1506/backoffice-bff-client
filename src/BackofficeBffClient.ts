@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
-import { IUser, IBreeder, ErrorRequest } from '@cig-platform/types';
+import { IUser, IBreeder, ErrorRequest, IBreederImage } from '@cig-platform/types';
 
 export interface PostUserRequestSuccess {
   ok: true;
@@ -11,6 +11,11 @@ export interface PostUserRequestSuccess {
 export interface RequestSuccess {
   ok: true;
   token: string;
+}
+
+export interface GetBreederRequestSuccess {
+  ok: true;
+  breeder: IBreeder & { images: IBreederImage[] }
 }
 
 
@@ -54,6 +59,27 @@ export default class BackofficeBffClient {
           headers: {
             'X-Cig-Token': token,
             'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      return data;
+    } catch (error) {
+      if (!axios.isAxiosError(error)) return null;
+
+      const bodyData = error.response?.data as unknown as ErrorRequest;
+
+      return bodyData;
+    }
+  }
+
+  async getBreeder(breederId: string, token: string) {
+    try {
+      const { data } = await this._axiosBackofficeBffInstance.get<GetBreederRequestSuccess>(
+        `/v1/breeders/${breederId}`, 
+        {
+          headers: {
+            'X-Cig-Token': token,
           }
         }
       );
