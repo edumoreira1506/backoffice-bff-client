@@ -20,6 +20,10 @@ export interface PostPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry;
 }
 
+export interface GetPoultriesRequestSuccess extends RequestSuccess {
+  poultries: IPoultry[];
+}
+
 
 export const FILE_KEYS = ['newImages', 'files'];
 
@@ -107,5 +111,19 @@ export default class BackofficeBffClient {
     );
 
     return data;
+  }
+
+  @RequestErrorHandler([])
+  async getPoultries(breederId: string, token: string) {
+    const { data } = await this._axiosBackofficeBffInstance.get<GetPoultriesRequestSuccess>(
+      `/v1/breeder/${breederId}/poultries`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+
+    return data.poultries;
   }
 }
