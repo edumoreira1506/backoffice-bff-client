@@ -116,7 +116,7 @@ export default class BackofficeBffClient {
   @RequestErrorHandler([])
   async getPoultries(breederId: string, token: string) {
     const { data } = await this._axiosBackofficeBffInstance.get<GetPoultriesRequestSuccess>(
-      `/v1/breeder/${breederId}/poultries`,
+      `/v1/breeders/${breederId}/poultries`,
       {
         headers: {
           'X-Cig-Token': token,
