@@ -16,7 +16,7 @@ export interface GetBreederRequestSuccess extends RequestSuccess {
   breeder: IBreeder & { images: IBreederImage[] }
 }
 
-export interface PostPoultryRequestSuccess extends RequestSuccess {
+export interface PoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry;
 }
 
@@ -100,7 +100,7 @@ export default class BackofficeBffClient {
 
   @RequestErrorHandler()
   async postPoultry(breederId: string, token: string, poultry: Partial<IPoultry>) {
-    const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
+    const { data } = await this._axiosBackofficeBffInstance.post<PoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
       { poultry },
       {
@@ -125,5 +125,32 @@ export default class BackofficeBffClient {
     );
 
     return data.poultries;
+  }
+
+  @RequestErrorHandler()
+  async getPoultry(breederId: string, poultryId: string, token: string) {
+    const { data } = await this._axiosBackofficeBffInstance.get<PoultryRequestSuccess>(
+      `/v1/breeders/${breederId}/poultries/${poultryId}`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+
+    return data.poultry;
+  }
+
+  @RequestErrorHandler()
+  async updatePoultry(breederId: string, poultryId: string, token: string, poultry: Partial<IPoultry>) {
+    await this._axiosBackofficeBffInstance.patch(
+      `/v1/breeders/${breederId}/poultries/${poultryId}`,
+      { poultry },
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
   }
 }
