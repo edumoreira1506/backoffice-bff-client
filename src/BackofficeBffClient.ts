@@ -99,10 +99,10 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
-  async postPoultry(breederId: string, token: string, poultry: IPoultry) {
+  async postPoultry(breederId: string, token: string, poultry: Partial<IPoultry>) {
     const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
-      poultry,
+      { poultry },
       {
         headers: {
           'X-Cig-Token': token,
