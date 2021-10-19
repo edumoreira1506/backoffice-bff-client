@@ -140,4 +140,17 @@ export default class BackofficeBffClient {
 
     return data.poultry;
   }
+
+  @RequestErrorHandler()
+  async updatePoultry(breederId: string, poultryId: string, token: string, poultry: Partial<IPoultry>) {
+    await this._axiosBackofficeBffInstance.patch(
+      `/v1/breeders/${breederId}/poultries/${poultryId}`,
+      { poultry },
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
 }
