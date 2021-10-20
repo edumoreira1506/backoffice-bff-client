@@ -110,10 +110,13 @@ export default class BackofficeBffClient {
   async postPoultry(breederId: string, token: string, poultry: Partial<IPoultry>) {
     const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
-      { poultry },
+      toFormData({
+        poultry: JSON.stringify(poultry),
+      }),
       {
         headers: {
           'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
         }
       },
     );
