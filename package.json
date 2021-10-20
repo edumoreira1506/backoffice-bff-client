@@ -1,6 +1,6 @@
 {
 	"name": "@cig-platform/backoffice-bff-client",
-	"version": "0.0.14",
+	"version": "0.0.15",
 	"description": "",
 	"main": "build/index.js",
 	"types": "build/index.d.ts",
@@ -19,7 +19,7 @@
 	"homepage": "",
 	"dependencies": {
 		"@cig-platform/decorators": "0.0.1",
-		"@cig-platform/types": "0.0.12",
+		"@cig-platform/types": "0.0.13",
 		"axios": "0.21.4",
 		"form-data": "^4.0.0"
 	},
