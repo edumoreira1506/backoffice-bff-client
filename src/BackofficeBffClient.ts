@@ -59,7 +59,7 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
-  async editBreeder(
+  async updateBreeder(
     breederId: string,
     token: string,
     breeder: Partial<IBreeder>,
