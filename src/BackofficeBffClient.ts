@@ -107,11 +107,17 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
-  async postPoultry(breederId: string, token: string, poultry: Partial<IPoultry>) {
+  async postPoultry(
+    breederId: string,
+    token: string,
+    poultry: Partial<IPoultry>,
+    images: File[] = [],
+  ) {
     const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
       toFormData({
         poultry: JSON.stringify(poultry),
+        files: images
       }),
       {
         headers: {
