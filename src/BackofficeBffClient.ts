@@ -75,7 +75,7 @@ export default class BackofficeBffClient {
         newImages,
         deletedImages: removedImageIds.join(','),
         deletedContacts: removedContactIds.join(','),
-        contacts
+        contacts: JSON.stringify(contacts)
       }),
       {
         headers: {
