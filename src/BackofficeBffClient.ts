@@ -64,14 +64,18 @@ export default class BackofficeBffClient {
     token: string,
     breeder: Partial<IBreeder>,
     newImages: File[],
-    removedImageIds: string[] = []
+    removedImageIds: string[] = [],
+    removedContactIds: string[] = [],
+    contacts: Partial<IBreederContact>[] = []
   ) {
     const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
       `/v1/breeders/${breederId}`, 
       toFormData({
         ...breeder,
         newImages,
-        deletedImages: removedImageIds.join(',')
+        deletedImages: removedImageIds.join(','),
+        removedContactIds: removedContactIds.join(','),
+        contacts
       }),
       {
         headers: {
