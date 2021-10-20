@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
-import { IUser, IBreeder, IBreederImage, IPoultry, IBreederContact } from '@cig-platform/types';
+import { IUser, IBreeder, IBreederImage, IPoultry, IBreederContact, IPoultryImage } from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
 interface RequestSuccess {
@@ -16,8 +16,12 @@ export interface GetBreederRequestSuccess extends RequestSuccess {
   breeder: IBreeder & { images: IBreederImage[] } & { contacts: IBreederContact[] }
 }
 
-export interface PoultryRequestSuccess extends RequestSuccess {
+export interface GetPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry;
+}
+
+export interface PostPoultryRequestSuccess extends RequestSuccess {
+  poultry: IPoultry & { images: IPoultryImage[] };
 }
 
 export interface GetPoultriesRequestSuccess extends RequestSuccess {
@@ -104,7 +108,7 @@ export default class BackofficeBffClient {
 
   @RequestErrorHandler()
   async postPoultry(breederId: string, token: string, poultry: Partial<IPoultry>) {
-    const { data } = await this._axiosBackofficeBffInstance.post<PoultryRequestSuccess>(
+    const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
       { poultry },
       {
@@ -133,7 +137,7 @@ export default class BackofficeBffClient {
 
   @RequestErrorHandler()
   async getPoultry(breederId: string, poultryId: string, token: string) {
-    const { data } = await this._axiosBackofficeBffInstance.get<PoultryRequestSuccess>(
+    const { data } = await this._axiosBackofficeBffInstance.get<GetPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries/${poultryId}`,
       {
         headers: {
