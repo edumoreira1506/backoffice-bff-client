@@ -74,7 +74,7 @@ export default class BackofficeBffClient {
         ...breeder,
         newImages,
         deletedImages: removedImageIds.join(','),
-        removedContactIds: removedContactIds.join(','),
+        deletedContacts: removedContactIds.join(','),
         contacts
       }),
       {
