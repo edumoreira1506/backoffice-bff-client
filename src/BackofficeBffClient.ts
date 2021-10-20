@@ -16,11 +16,11 @@ export interface GetBreederRequestSuccess extends RequestSuccess {
   breeder: IBreeder & { images: IBreederImage[] } & { contacts: IBreederContact[] }
 }
 
-export interface GetPoultryRequestSuccess extends RequestSuccess {
+export interface PostPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry;
 }
 
-export interface PostPoultryRequestSuccess extends RequestSuccess {
+export interface GetPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry & { images: IPoultryImage[] };
 }
 
