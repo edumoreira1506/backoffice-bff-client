@@ -164,13 +164,15 @@ export default class BackofficeBffClient {
     poultryId: string,
     token: string,
     poultry: Partial<IPoultry>,
-    images: File[] = []
+    images: File[] = [],
+    deletedImages: string[] = []
   ) {
     await this._axiosBackofficeBffInstance.patch(
       `/v1/breeders/${breederId}/poultries/${poultryId}`,
       toFormData({
         poultry: JSON.stringify(poultry),
-        files: images
+        files: images,
+        deletedImages: deletedImages.join(',')
       }),
       {
         headers: {
