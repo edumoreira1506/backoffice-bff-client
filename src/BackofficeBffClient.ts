@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
-import { IUser, IBreeder, IBreederImage, IPoultry } from '@cig-platform/types';
+import { IUser, IBreeder, IBreederImage, IPoultry, IBreederContact } from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
 interface RequestSuccess {
@@ -13,7 +13,7 @@ export interface PostUserRequestSuccess extends RequestSuccess {
 }
 
 export interface GetBreederRequestSuccess extends RequestSuccess {
-  breeder: IBreeder & { images: IBreederImage[] }
+  breeder: IBreeder & { images: IBreederImage[] } & { contacts: IBreederContact[] }
 }
 
 export interface PoultryRequestSuccess extends RequestSuccess {
@@ -59,19 +59,23 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
-  async editBreeder(
+  async updateBreeder(
     breederId: string,
     token: string,
     breeder: Partial<IBreeder>,
     newImages: File[],
-    removedImageIds: string[] = []
+    removedImageIds: string[] = [],
+    removedContactIds: string[] = [],
+    contacts: Partial<IBreederContact>[] = []
   ) {
     const { data } = await this._axiosBackofficeBffInstance.patch<RequestSuccess>(
       `/v1/breeders/${breederId}`, 
       toFormData({
         ...breeder,
         newImages,
-        deletedImages: removedImageIds.join(',')
+        deletedImages: removedImageIds.join(','),
+        deletedContacts: removedContactIds.join(','),
+        contacts
       }),
       {
         headers: {
