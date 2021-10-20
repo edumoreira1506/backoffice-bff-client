@@ -159,13 +159,23 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
-  async updatePoultry(breederId: string, poultryId: string, token: string, poultry: Partial<IPoultry>) {
+  async updatePoultry(
+    breederId: string,
+    poultryId: string,
+    token: string,
+    poultry: Partial<IPoultry>,
+    images: File[] = []
+  ) {
     await this._axiosBackofficeBffInstance.patch(
       `/v1/breeders/${breederId}/poultries/${poultryId}`,
-      { poultry },
+      toFormData({
+        poultry: JSON.stringify(poultry),
+        files: images
+      }),
       {
         headers: {
           'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
         }
       },
     );
