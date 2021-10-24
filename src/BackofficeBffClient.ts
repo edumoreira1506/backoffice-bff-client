@@ -24,8 +24,15 @@ export interface GetPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry & { images: IPoultryImage[] };
 }
 
+interface Poultry extends IPoultry {
+  mainImage?: string;
+}
+
 export interface GetPoultriesRequestSuccess extends RequestSuccess {
-  poultries: IPoultry[];
+  reproductives: Poultry[];
+  matrix: Poultry[];
+  male: Poultry[];
+  female: Poultry[];
 }
 
 
@@ -141,7 +148,12 @@ export default class BackofficeBffClient {
       },
     );
 
-    return data.poultries;
+    return {
+      male: data.male,
+      matrix: data.matrix,
+      female: data.female,
+      reproductives: data.reproductives,
+    };
   }
 
   @RequestErrorHandler()
