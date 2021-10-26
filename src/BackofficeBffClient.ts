@@ -225,4 +225,21 @@ export default class BackofficeBffClient {
       },
     );
   }
+
+  @RequestErrorHandler([])
+  async getRegisters(
+    breederId: string,
+    poultryId: string,
+    token: string,
+  ) {
+    await this._axiosBackofficeBffInstance.get(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
+        }
+      },
+    );
+  }
 }
