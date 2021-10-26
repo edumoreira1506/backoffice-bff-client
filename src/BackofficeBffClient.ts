@@ -202,4 +202,27 @@ export default class BackofficeBffClient {
       },
     );
   }
+
+  @RequestErrorHandler()
+  async postRegister(
+    breederId: string,
+    poultryId: string,
+    token: string,
+    register: Partial<IPoultryRegister>,
+    files: File[] = [],
+  ) {
+    await this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
+      toFormData({
+        register: JSON.stringify(register),
+        files,
+      }),
+      {
+        headers: {
+          'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
+        }
+      },
+    );
+  }
 }
