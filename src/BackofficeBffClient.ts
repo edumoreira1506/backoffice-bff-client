@@ -1,6 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
-import { IUser, IBreeder, IBreederImage, IPoultry, IBreederContact, IPoultryImage } from '@cig-platform/types';
+import {
+  IUser,
+  IBreeder,
+  IBreederImage,
+  IPoultry,
+  IBreederContact,
+  IPoultryImage,
+  IPoultryRegister,
+} from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
 interface RequestSuccess {
@@ -21,7 +29,7 @@ export interface PostPoultryRequestSuccess extends RequestSuccess {
 }
 
 export interface GetPoultryRequestSuccess extends RequestSuccess {
-  poultry: IPoultry & { images: IPoultryImage[] };
+  poultry: IPoultry & { images: IPoultryImage[]; registers: IPoultryRegister[] };
 }
 
 interface Poultry extends IPoultry {
