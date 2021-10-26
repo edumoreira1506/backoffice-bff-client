@@ -1,6 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
-import { IUser, IBreeder, IBreederImage, IPoultry, IBreederContact, IPoultryImage } from '@cig-platform/types';
+import {
+  IUser,
+  IBreeder,
+  IBreederImage,
+  IPoultry,
+  IBreederContact,
+  IPoultryImage,
+  IPoultryRegister,
+} from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
 interface RequestSuccess {
@@ -21,7 +29,7 @@ export interface PostPoultryRequestSuccess extends RequestSuccess {
 }
 
 export interface GetPoultryRequestSuccess extends RequestSuccess {
-  poultry: IPoultry & { images: IPoultryImage[] };
+  poultry: IPoultry & { images: IPoultryImage[]; registers: IPoultryRegister[] };
 }
 
 interface Poultry extends IPoultry {
@@ -186,6 +194,46 @@ export default class BackofficeBffClient {
         files: images,
         deletedImages: deletedImages.join(',')
       }),
+      {
+        headers: {
+          'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
+  async postRegister(
+    breederId: string,
+    poultryId: string,
+    token: string,
+    register: Partial<IPoultryRegister>,
+    files: File[] = [],
+  ) {
+    await this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
+      toFormData({
+        register: JSON.stringify(register),
+        files,
+      }),
+      {
+        headers: {
+          'X-Cig-Token': token,
+          'Content-Type': 'multipart/form-data'
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler([])
+  async getRegisters(
+    breederId: string,
+    poultryId: string,
+    token: string,
+  ) {
+    await this._axiosBackofficeBffInstance.get(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
       {
         headers: {
           'X-Cig-Token': token,
