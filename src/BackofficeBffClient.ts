@@ -181,7 +181,7 @@ export default class BackofficeBffClient {
       },
     );
 
-    return data.poultry;
+    return data;
   }
 
   @RequestErrorHandler()
