@@ -29,6 +29,10 @@ export interface PostPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry;
 }
 
+export interface PostAdvertisingRequestSuccess extends RequestSuccess {
+  advertising: IAdvertising;
+}
+
 export interface GetPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry & { images: IPoultryImage[]; registers: IPoultryRegister[] };
   advertisings: IAdvertising[];
@@ -228,20 +232,23 @@ export default class BackofficeBffClient {
     );
   }
 
-  @RequestErrorHandler([])
-  async getRegisters(
+  @RequestErrorHandler()
+  async postAdvertising(
     breederId: string,
     poultryId: string,
     token: string,
+    advertising: Partial<IAdvertising>,
   ) {
-    await this._axiosBackofficeBffInstance.get(
+    const { data } = await this._axiosBackofficeBffInstance.post<PostAdvertisingRequestSuccess>(
       `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
+      advertising,
       {
         headers: {
           'X-Cig-Token': token,
-          'Content-Type': 'multipart/form-data'
         }
       },
     );
+
+    return data.advertising;
   }
 }
