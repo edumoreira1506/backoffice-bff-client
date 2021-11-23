@@ -240,7 +240,7 @@ export default class BackofficeBffClient {
     advertising: Partial<IAdvertising>,
   ) {
     const { data } = await this._axiosBackofficeBffInstance.post<PostAdvertisingRequestSuccess>(
-      `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings`,
       advertising,
       {
         headers: {
