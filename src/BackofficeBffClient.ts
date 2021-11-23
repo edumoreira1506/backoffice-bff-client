@@ -8,6 +8,7 @@ import {
   IBreederContact,
   IPoultryImage,
   IPoultryRegister,
+  IAdvertising,
 } from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
@@ -30,6 +31,7 @@ export interface PostPoultryRequestSuccess extends RequestSuccess {
 
 export interface GetPoultryRequestSuccess extends RequestSuccess {
   poultry: IPoultry & { images: IPoultryImage[]; registers: IPoultryRegister[] };
+  advertisings: IAdvertising[];
 }
 
 interface Poultry extends IPoultry {
