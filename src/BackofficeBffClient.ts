@@ -241,7 +241,7 @@ export default class BackofficeBffClient {
   ) {
     const { data } = await this._axiosBackofficeBffInstance.post<PostAdvertisingRequestSuccess>(
       `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings`,
-      advertising,
+      { advertising },
       {
         headers: {
           'X-Cig-Token': token,
