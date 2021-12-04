@@ -251,4 +251,21 @@ export default class BackofficeBffClient {
 
     return data.advertising;
   }
+
+  @RequestErrorHandler()
+  async removeAdvertising(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    token: string,
+  ) {
+    await this._axiosBackofficeBffInstance.delete(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
 }
