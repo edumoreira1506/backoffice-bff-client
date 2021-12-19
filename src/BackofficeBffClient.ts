@@ -49,6 +49,10 @@ export interface GetPoultriesRequestSuccess extends RequestSuccess {
   female: Poultry[];
 }
 
+export interface GetPoultryRegistersRequestSuccess extends RequestSuccess {
+  registers: IPoultryRegister[];
+}
+
 
 export const FILE_KEYS = ['newImages', 'files'];
 
@@ -227,6 +231,26 @@ export default class BackofficeBffClient {
         headers: {
           'X-Cig-Token': token,
           'Content-Type': 'multipart/form-data'
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
+  async getRegisters(
+    breederId: string,
+    poultryId: string,
+    token: string,
+    registerType = ''
+  ) {
+    return this._axiosBackofficeBffInstance.get<GetPoultryRegistersRequestSuccess>(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        },
+        params: {
+          registerType
         }
       },
     );
