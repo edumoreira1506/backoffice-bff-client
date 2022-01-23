@@ -312,4 +312,23 @@ export default class BackofficeBffClient {
       },
     );
   }
+
+  @RequestErrorHandler()
+  async updateAdvertising(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    token: string,
+    price: number
+  ) {
+    await this._axiosBackofficeBffInstance.patch(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}`,
+      { price },
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
 }
