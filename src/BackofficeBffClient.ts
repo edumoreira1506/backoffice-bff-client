@@ -9,6 +9,7 @@ import {
   IPoultryImage,
   IPoultryRegister,
   IAdvertising,
+  IAdvertisingQuestionAnswer
 } from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
@@ -324,6 +325,26 @@ export default class BackofficeBffClient {
     await this._axiosBackofficeBffInstance.patch(
       `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}`,
       { price },
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
+  async postAdvertisingQuestionAnswer(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    questionId: string,
+    token: string,
+    answer: IAdvertisingQuestionAnswer
+  ) {
+    return this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/questions/${questionId}/answers`,
+      { answer },
       {
         headers: {
           'X-Cig-Token': token,
