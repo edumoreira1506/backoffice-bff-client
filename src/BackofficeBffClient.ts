@@ -340,7 +340,7 @@ export default class BackofficeBffClient {
     advertisingId: string,
     questionId: string,
     token: string,
-    answer: IAdvertisingQuestionAnswer
+    answer: Partial<IAdvertisingQuestionAnswer>
   ) {
     return this._axiosBackofficeBffInstance.post(
       `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/questions/${questionId}/answers`,
