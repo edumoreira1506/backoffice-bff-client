@@ -9,7 +9,8 @@ import {
   IPoultryImage,
   IPoultryRegister,
   IAdvertising,
-  IAdvertisingQuestionAnswer
+  IAdvertisingQuestionAnswer,
+  IDeal
 } from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
@@ -48,6 +49,14 @@ export interface GetPoultriesRequestSuccess extends RequestSuccess {
   matrix: Poultry[];
   male: Poultry[];
   female: Poultry[];
+}
+
+export interface GetDealsRequestSuccess extends RequestSuccess {
+  deals: {
+    poultry: IPoultry;
+    advertising: IAdvertising;
+    deal: IDeal;
+  }[];
 }
 
 export interface GetPoultryRegistersRequestSuccess extends RequestSuccess {
@@ -173,6 +182,20 @@ export default class BackofficeBffClient {
       female: data.female,
       reproductives: data.reproductives,
     };
+  }
+
+  @RequestErrorHandler([])
+  async getDeals(breederId: string, token: string) {
+    const { data } = await this._axiosBackofficeBffInstance.get<GetDealsRequestSuccess>(
+      `/v1/breeders/${breederId}/deals`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+
+    return data.deals;
   }
 
   @RequestErrorHandler()
