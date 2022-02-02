@@ -352,4 +352,62 @@ export default class BackofficeBffClient {
       },
     );
   }
+
+  @RequestErrorHandler()
+  async confirmDeal(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    dealId: string,
+    token: string,
+  ) {
+    return this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/confirm`,
+      {},
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
+  async cancelDeal(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    dealId: string,
+    token: string,
+    reason: string
+  ) {
+    return this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/cancel`,
+      { reason },
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
+  async finishDeal(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    dealId: string,
+    token: string,
+  ) {
+    return this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/receive`,
+      {},
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
 }
