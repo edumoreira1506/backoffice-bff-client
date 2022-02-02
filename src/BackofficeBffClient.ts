@@ -56,6 +56,7 @@ export interface GetDealsRequestSuccess extends RequestSuccess {
     poultry: IPoultry;
     advertising: IAdvertising;
     deal: IDeal;
+    breeder: IBreeder;
   }[];
 }
 
