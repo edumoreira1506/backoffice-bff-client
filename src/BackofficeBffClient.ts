@@ -185,9 +185,9 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler([])
-  async getDeals(breederId: string, token: string) {
+  async getDeals(breederId: string, token: string, filter?: 'SELLER' | 'BUYER') {
     const { data } = await this._axiosBackofficeBffInstance.get<GetDealsRequestSuccess>(
-      `/v1/breeders/${breederId}/deals`,
+      `/v1/breeders/${breederId}/deals?${filter ? `as=${filter}` : ''}`,
       {
         headers: {
           'X-Cig-Token': token,
