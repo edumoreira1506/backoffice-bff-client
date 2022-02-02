@@ -391,4 +391,23 @@ export default class BackofficeBffClient {
       },
     );
   }
+
+  @RequestErrorHandler()
+  async finishDeal(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    dealId: string,
+    token: string,
+  ) {
+    return this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/receive`,
+      {},
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
 }
