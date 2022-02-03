@@ -60,6 +60,13 @@ export interface GetDealsRequestSuccess extends RequestSuccess {
   }[];
 }
 
+export interface DealsRequestSuccess extends RequestSuccess {
+  poultry: IPoultry;
+  advertising: IAdvertising;
+  deal: IDeal;
+  breeder: IBreeder;
+}
+
 export interface GetPoultryRegistersRequestSuccess extends RequestSuccess {
   registers: IPoultryRegister[];
 }
@@ -183,6 +190,20 @@ export default class BackofficeBffClient {
       female: data.female,
       reproductives: data.reproductives,
     };
+  }
+
+  @RequestErrorHandler()
+  async getDeal(breederId: string, dealId: string, token: string) {
+    const { data } = await this._axiosBackofficeBffInstance.get<DealsRequestSuccess>(
+      `/v1/breeders/${breederId}/deals/${dealId}`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+
+    return data;
   }
 
   @RequestErrorHandler([])
