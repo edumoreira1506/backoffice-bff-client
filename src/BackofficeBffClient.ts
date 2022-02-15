@@ -157,12 +157,14 @@ export default class BackofficeBffClient {
     token: string,
     poultry: Partial<IPoultry>,
     images: File[] = [],
+    measurementAndWeight: { measurement?: number; weight?: number } = {}
   ) {
     const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
       toFormData({
         poultry: JSON.stringify(poultry),
-        files: images
+        files: images,
+        measurementAndWeight: JSON.stringify(measurementAndWeight)
       }),
       {
         headers: {
