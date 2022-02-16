@@ -160,17 +160,18 @@ export default class BackofficeBffClient {
     images: File[] = [],
     measurementAndWeight: { measurement?: number; weight?: number } = {}
   ) {
+    const formData = toFormData({
+      poultry: JSON.stringify(poultry),
+      files: images,
+      measurementAndWeight: JSON.stringify(measurementAndWeight)
+    });
     const { data } = await this._axiosBackofficeBffInstance.post<PostPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries`,
-      toFormData({
-        poultry: JSON.stringify(poultry),
-        files: images,
-        measurementAndWeight: JSON.stringify(measurementAndWeight)
-      }),
+      formData,
       {
         headers: {
           'X-Cig-Token': token,
-          'Content-Type': 'multipart/form-data'
+          ...formData.getHeaders()
         }
       },
     );
