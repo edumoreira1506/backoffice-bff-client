@@ -59,6 +59,7 @@ export interface GetDealsRequestSuccess extends RequestSuccess {
     deal: IDeal;
     breeder: IBreeder;
     measurementAndWeight: IPoultryRegister[];
+    mainImage?: string;
   }[];
 }
 
