@@ -273,16 +273,17 @@ export default class BackofficeBffClient {
     register: Partial<IPoultryRegister>,
     files: File[] = [],
   ) {
+    const formData = toFormData({
+      register: JSON.stringify(register),
+      files,
+    });
     await this._axiosBackofficeBffInstance.post(
       `/v1/breeders/${breederId}/poultries/${poultryId}/registers`,
-      toFormData({
-        register: JSON.stringify(register),
-        files,
-      }),
+      formData,
       {
         headers: {
           'X-Cig-Token': token,
-          'Content-Type': 'multipart/form-data'
+          ...formData.getHeaders()
         }
       },
     );
