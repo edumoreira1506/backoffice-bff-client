@@ -67,6 +67,7 @@ export interface GetDealRequestSuccess extends RequestSuccess {
   deal: IDeal;
   breeder: IBreeder;
   events: IDealEvent[];
+  breederContacts: IBreederContact[];
 }
 
 export interface GetPoultryRegistersRequestSuccess extends RequestSuccess {
