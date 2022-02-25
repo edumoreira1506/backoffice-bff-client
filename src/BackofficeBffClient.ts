@@ -284,7 +284,6 @@ export default class BackofficeBffClient {
       {
         headers: {
           'X-Cig-Token': token,
-          ...formData.getHeaders()
         }
       },
     );
