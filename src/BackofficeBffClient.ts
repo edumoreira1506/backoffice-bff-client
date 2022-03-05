@@ -61,6 +61,7 @@ export interface GetDealsRequestSuccess extends RequestSuccess {
     measurementAndWeight: IPoultryRegister[];
     mainImage?: string;
   }[];
+  pages: number;
 }
 
 export interface GetDealRequestSuccess extends RequestSuccess {
@@ -224,7 +225,7 @@ export default class BackofficeBffClient {
       },
     );
 
-    return data.deals;
+    return data;
   }
 
   @RequestErrorHandler()
