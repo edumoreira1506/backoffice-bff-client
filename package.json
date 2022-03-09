@@ -19,7 +19,7 @@
 	"homepage": "",
 	"dependencies": {
 		"@cig-platform/decorators": "0.0.2",
-		"@cig-platform/types": "0.0.33",
+		"@cig-platform/types": "0.0.34",
 		"axios": "0.26.0",
 		"form-data": "^4.0.0"
 	},
