@@ -335,6 +335,23 @@ export default class BackofficeBffClient {
   }
 
   @RequestErrorHandler()
+  async killPoultry(
+    breederId: string,
+    poultryId: string,
+    token: string,
+  ) {
+    await this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/kill`,
+      {},
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
   async postAdvertising(
     breederId: string,
     poultryId: string,
