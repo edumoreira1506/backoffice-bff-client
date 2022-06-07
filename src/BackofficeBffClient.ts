@@ -11,7 +11,8 @@ import {
   IAdvertising,
   IAdvertisingQuestionAnswer,
   IDeal,
-  IDealEvent
+  IDealEvent,
+  IReview
 } from '@cig-platform/types';
 import { RequestErrorHandler } from '@cig-platform/decorators';
 
@@ -477,6 +478,26 @@ export default class BackofficeBffClient {
     return this._axiosBackofficeBffInstance.post(
       `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/receive`,
       {},
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+  }
+
+  @RequestErrorHandler()
+  async postReview(
+    breederId: string,
+    poultryId: string,
+    advertisingId: string,
+    dealId: string,
+    token: string,
+    reviewData: IReview['metadata']
+  ) {
+    return this._axiosBackofficeBffInstance.post(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/reviews`,
+      reviewData,
       {
         headers: {
           'X-Cig-Token': token,
