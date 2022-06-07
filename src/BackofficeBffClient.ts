@@ -496,7 +496,7 @@ export default class BackofficeBffClient {
     reviewData: IReview['metadata']
   ) {
     return this._axiosBackofficeBffInstance.post(
-      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/receive`,
+      `/v1/breeders/${breederId}/poultries/${poultryId}/advertisings/${advertisingId}/deals/${dealId}/reviews`,
       reviewData,
       {
         headers: {
