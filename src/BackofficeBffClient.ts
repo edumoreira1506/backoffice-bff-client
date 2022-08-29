@@ -42,6 +42,11 @@ export interface GetPoultryRequestSuccess extends RequestSuccess {
   advertisings: IAdvertising[];
 }
 
+export interface GetPoultryParentsRequestSuccess extends RequestSuccess {
+  dad: IPoultry;
+  mom: IPoultry;
+}
+
 interface Poultry extends IPoultry {
   mainImage?: string;
 }
@@ -237,6 +242,20 @@ export default class BackofficeBffClient {
   async getPoultry(breederId: string, poultryId: string, token: string) {
     const { data } = await this._axiosBackofficeBffInstance.get<GetPoultryRequestSuccess>(
       `/v1/breeders/${breederId}/poultries/${poultryId}`,
+      {
+        headers: {
+          'X-Cig-Token': token,
+        }
+      },
+    );
+
+    return data;
+  }
+
+  @RequestErrorHandler()
+  async getPoultryParents(breederId: string, poultryId: string, token: string) {
+    const { data } = await this._axiosBackofficeBffInstance.get<GetPoultryParentsRequestSuccess>(
+      `/v1/breeders/${breederId}/poultries/${poultryId}/parents`,
       {
         headers: {
           'X-Cig-Token': token,
